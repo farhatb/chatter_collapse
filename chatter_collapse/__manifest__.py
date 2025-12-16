@@ -24,6 +24,7 @@
             'chatter_collapse/static/src/css/chatter_collapse.css',
         ],
     },
+    'images': ['static/description/banner.png'],
     'installable': True,
     'application': False,
     'auto_install': False,
