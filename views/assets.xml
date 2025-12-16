@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb template for the toggle button -->
+        <template id="chatter_collapse_toggle_button" name="Chatter Collapse Toggle">
+            <div class="chatter_collapse_toggle">
+                <button type="button" class="btn btn-sm btn-outline-primary chatter_toggle_btn" 
+                        title="Toggle Chatter" data-chatter-toggle="true">
+                    <i class="fa fa-comments"/>
+                    <span class="chatter_toggle_text">Messages</span>
+                </button>
+            </div>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,215 @@
+/* Chatter Collapse Styles */
+
+.chatter_collapse_toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.chatter_toggle_btn {
+    background: #007bff;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.chatter_toggle_btn:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,123,255,0.4);
+}
+
+.chatter_toggle_btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.chatter_toggle_btn .fa {
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+/* Collapsible chatter styles */
+.chatter_collapsible {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.chatter_collapsed {
+    display: none !important;
+}
+
+.chatter_expanded {
+    display: block !important;
+}
+
+/* Smooth transitions for form width changes */
+.chatter_form_expanded .o_form_sheet_bg,
+.chatter_form_expanded .o_form_sheet {
+    transition: all 0.3s ease !important;
+}
+
+/* Icon rotation when expanded */
+.chatter_expanded + .chatter_collapse_toggle .chatter_toggle_btn .fa {
+    transform: rotate(180deg);
+}
+
+/* Button text change */
+.chatter_expanded + .chatter_collapse_toggle .chatter_toggle_text::after {
+    content: "Hide Messages";
+}
+
+.chatter_collapsed + .chatter_collapse_toggle .chatter_toggle_text::after {
+    content: "Show Messages";
+}
+
+/* Hide original text */
+.chatter_toggle_text {
+    font-size: 0;
+}
+
+/* Button state for expanded chatter - keep blue theme */
+.chatter_expanded + .chatter_collapse_toggle .chatter_toggle_btn {
+    background: #17a2b8;
+    box-shadow: 0 4px 12px rgba(23,162,184,0.3);
+}
+
+.chatter_expanded + .chatter_collapse_toggle .chatter_toggle_btn:hover {
+    background: #138496;
+    box-shadow: 0 6px 16px rgba(23,162,184,0.4);
+}
+
+/* Remove visual indicators - keep it clean */
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .chatter_collapse_toggle {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .chatter_toggle_btn {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+}
+
+/* Form view adjustments for floating button - no specific styling needed */
+
+.o_form_view .chatter_collapsible {
+    margin-top: 0;
+}
+
+/* Loading state */
+.chatter_toggle_btn.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.chatter_toggle_btn.loading .fa {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ===== FULL WIDTH FORM WHEN CHATTER IS COLLAPSED ===== */
+
+/* Remove visual feedback - keep interface clean */
+
+/* Main form expansion - Remove all width constraints */
+.chatter_form_expanded .o_form_sheet_bg,
+.chatter_form_expanded .o_form_sheet {
+    max-width: none !important;
+    width: 100% !important;
+    flex: 1 1 100% !important;
+}
+
+/* Remove any margins/padding that reserve space for chatter */
+.chatter_form_expanded .o_form_view,
+.chatter_form_expanded .o_content,
+.chatter_form_expanded .o_main_content {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Additional container expansions */
+.chatter_form_expanded .o_action_manager .o_action,
+.chatter_form_expanded .o_action_manager,
+.chatter_form_expanded .o_main_content {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+/* Ensure all child elements expand */
+.chatter_form_expanded .o_form_sheet > * {
+    max-width: none !important;
+}
+
+/* Group expansions */
+.chatter_form_expanded .o_group,
+.chatter_form_expanded .o_inner_group {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+/* Notebook expansion */
+.chatter_form_expanded .o_notebook {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+/* Field widgets */
+.chatter_form_expanded .o_field_widget {
+    max-width: none !important;
+}
+
+/* Status bar */
+.chatter_form_expanded .o_form_statusbar {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+/* Button box */
+.chatter_form_expanded .oe_button_box {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+/* Override Odoo layout constraints at body level */
+body.chatter_form_expanded .o_content,
+body.chatter_form_expanded .o_main_content,
+body.chatter_form_expanded .o_action_manager,
+body.chatter_form_expanded .o_form_view {
+    max-width: none !important;
+    width: 100% !important;
+    flex: 1 1 100% !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .chatter_form_expanded .o_form_sheet {
+        padding: 16px !important;
+    }
+}
