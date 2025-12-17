@@ -1,6 +1,6 @@
 {
     'name': 'Chatter Collapse',
-    'version': '17.0.2.1.0',
+    'version': '1.0',
     'category': 'Tools',
     'summary': 'Make chatter collapsible and closed by default',
     'description': """
@@ -15,9 +15,6 @@
     """,
     'author': 'Farhat Boujlida',
     'depends': ['mail', 'web'],
-    'data': [
-        'views/assets.xml',
-    ],
     'assets': {
         'web.assets_backend': [
             'chatter_collapse/static/src/js/chatter_collapse.js',

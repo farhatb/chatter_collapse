@@ -52,8 +52,20 @@ class ChatterCollapseService {
      * Process chatter elements in the given container
      */
     _processChatterElements(container) {
-        const chatters = container.querySelectorAll('.oe_chatter');
-        chatters.forEach(chatter => this._setupSingleChatter(chatter));
+        // Odoo 18 uses .o-mail-ChatterContainer or .o-mail-Form-chatter as the container
+        // and .o-mail-Chatter as the actual chatter component
+        const chatterContainers = container.querySelectorAll('.o-mail-ChatterContainer, .o-mail-Form-chatter');
+        const chatters = container.querySelectorAll('.o-mail-Chatter');
+        
+        // Process containers (preferred for Odoo 18)
+        chatterContainers.forEach(container => this._setupSingleChatter(container));
+        // Also process direct chatter components as fallback
+        chatters.forEach(chatter => {
+            // Only process if not already inside a processed container
+            if (!chatter.closest('[data-chatter-processed="true"]')) {
+                this._setupSingleChatter(chatter);
+            }
+        });
     }
 
     /**
@@ -113,8 +125,13 @@ class ChatterCollapseService {
         toggleButton.appendChild(textSpan);
         toggleContainer.appendChild(toggleButton);
         
-        // Insert before chatter
-        chatter.parentElement.insertBefore(toggleContainer, chatter);
+        // Insert before chatter (Odoo 18 structure)
+        if (chatter.parentElement) {
+            chatter.parentElement.insertBefore(toggleContainer, chatter);
+        } else {
+            // Fallback: append to body if no parent
+            document.body.appendChild(toggleContainer);
+        }
         
         // Bind events
         this._bindToggleEvents(toggleContainer, chatter);
@@ -224,21 +241,28 @@ if (document.readyState !== 'loading') {
     chatterCollapseService.initializeChatterCollapse();
 }
 
-// Additional initialization for Odoo's dynamic loading
-setTimeout(() => {
-    const chatters = document.querySelectorAll('.oe_chatter');
-    if (chatters.length > 0) {
-        chatters.forEach(chatter => {
-            chatterCollapseService._setupSingleChatter(chatter);
+// Additional initialization for Odoo 18's dynamic loading
+// Odoo 18 uses OWL components that load asynchronously
+const initializeForOdoo18 = () => {
+    const chatterContainers = document.querySelectorAll('.o-mail-ChatterContainer, .o-mail-Form-chatter');
+    const chatters = document.querySelectorAll('.o-mail-Chatter');
+    
+    if (chatterContainers.length > 0 || chatters.length > 0) {
+        chatterContainers.forEach(container => {
+            chatterCollapseService._setupSingleChatter(container);
         });
-    } else {
-        // Retry for dynamically loaded content
-        setTimeout(() => {
-            const delayedChatters = document.querySelectorAll('.oe_chatter');
-            delayedChatters.forEach(chatter => chatterCollapseService._setupSingleChatter(chatter));
-        }, 2000);
+        chatters.forEach(chatter => {
+            if (!chatter.closest('[data-chatter-processed="true"]')) {
+                chatterCollapseService._setupSingleChatter(chatter);
+            }
+        });
     }
-}, 1000);
+};
+
+// Multiple retries for Odoo 18's async component loading
+setTimeout(initializeForOdoo18, 500);
+setTimeout(initializeForOdoo18, 1500);
+setTimeout(initializeForOdoo18, 3000);
 
 // Export for potential use by other modules
 export default chatterCollapseService;

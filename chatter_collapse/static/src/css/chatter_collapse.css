@@ -46,7 +46,10 @@
 }
 
 /* Collapsible chatter styles */
-.chatter_collapsible {
+.chatter_collapsible,
+.o-mail-ChatterContainer.chatter_collapsible,
+.o-mail-Form-chatter.chatter_collapsible,
+.o-mail-Chatter.chatter_collapsible {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     border-radius: 8px;
@@ -54,12 +57,18 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.chatter_collapsed {
+.chatter_collapsed,
+.o-mail-ChatterContainer.chatter_collapsed,
+.o-mail-Form-chatter.chatter_collapsed,
+.o-mail-Chatter.chatter_collapsed {
     display: none !important;
 }
 
-.chatter_expanded {
-    display: block !important;
+.chatter_expanded,
+.o-mail-ChatterContainer.chatter_expanded,
+.o-mail-Form-chatter.chatter_expanded,
+.o-mail-Chatter.chatter_expanded {
+    display: flex !important;
 }
 
 /* Smooth transitions for form width changes */
@@ -69,15 +78,18 @@
 }
 
 /* Icon rotation when expanded */
+.chatter_expanded ~ .chatter_collapse_toggle .chatter_toggle_btn .fa,
 .chatter_expanded + .chatter_collapse_toggle .chatter_toggle_btn .fa {
     transform: rotate(180deg);
 }
 
 /* Button text change */
+.chatter_expanded ~ .chatter_collapse_toggle .chatter_toggle_text::after,
 .chatter_expanded + .chatter_collapse_toggle .chatter_toggle_text::after {
     content: "Hide Messages";
 }
 
+.chatter_collapsed ~ .chatter_collapse_toggle .chatter_toggle_text::after,
 .chatter_collapsed + .chatter_collapse_toggle .chatter_toggle_text::after {
     content: "Show Messages";
 }
@@ -88,11 +100,13 @@
 }
 
 /* Button state for expanded chatter - keep blue theme */
+.chatter_expanded ~ .chatter_collapse_toggle .chatter_toggle_btn,
 .chatter_expanded + .chatter_collapse_toggle .chatter_toggle_btn {
     background: #17a2b8;
     box-shadow: 0 4px 12px rgba(23,162,184,0.3);
 }
 
+.chatter_expanded ~ .chatter_collapse_toggle .chatter_toggle_btn:hover,
 .chatter_expanded + .chatter_collapse_toggle .chatter_toggle_btn:hover {
     background: #138496;
     box-shadow: 0 6px 16px rgba(23,162,184,0.4);
@@ -162,8 +176,8 @@
     width: 100% !important;
 }
 
-/* Ensure all child elements expand */
-.chatter_form_expanded .o_form_sheet > * {
+/* Ensure all child elements expand (except title elements) */
+.chatter_form_expanded .o_form_sheet > *:not(.oe_title):not(.o_title) {
     max-width: none !important;
 }
 
